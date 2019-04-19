@@ -3,7 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Road
+  - TopNearGrass
+  - TopFarGrass
+  - BottomNearGrass
+  - BottomFarLand1
+  - BottomFarLand2
+  - BottomFarLand3
+  - BottomFarLand4
+  - BottomFarLand5
+  - Obstacle
+  - Star
+  - ObTop
+  - ObBottom
+  - ObMiddle
+  - Trex
+  - Star Effect
   layers:
   - Default
   - TransparentFX
@@ -40,4 +56,46 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top far ground
+    uniqueID: 3388703371
+    locked: 0
+  - name: Top near ground
+    uniqueID: 3193598945
+    locked: 0
+  - name: Tree top
+    uniqueID: 2819487313
+    locked: 0
+  - name: Road
+    uniqueID: 1746567611
+    locked: 0
+  - name: Obstacle
+    uniqueID: 1216429113
+    locked: 0
+  - name: Main
+    uniqueID: 2926036803
+    locked: 0
+  - name: Bottom near ground
+    uniqueID: 1290295463
+    locked: 0
+  - name: Bottom far ground F1
+    uniqueID: 1294503981
+    locked: 0
+  - name: Bottom far ground F2
+    uniqueID: 3793029761
+    locked: 0
+  - name: Bottom far ground F3
+    uniqueID: 146642947
+    locked: 0
+  - name: Bottom far ground F4
+    uniqueID: 2193749895
+    locked: 0
+  - name: Bottom far ground F5
+    uniqueID: 1685312623
+    locked: 0
+  - name: Tree bottom
+    uniqueID: 612299873
+    locked: 0
+  - name: UI
+    uniqueID: 3350737645
     locked: 0
