@@ -111,7 +111,7 @@ public class GameplayController : MonoBehaviour
                         int randomIndex = 0;
                         do
                         {
-                            randomIndex = Mathf.RoundToInt(Random.Range(0f, 19f));
+                            randomIndex = Mathf.RoundToInt(Random.Range(0f, 20f));
                         } while (obstacles_List[randomIndex].activeInHierarchy); //do this until we get a list of obstacles that are not active
                         obstacles_List[randomIndex].SetActive(true);
                         obstacles_Is_Active = true;

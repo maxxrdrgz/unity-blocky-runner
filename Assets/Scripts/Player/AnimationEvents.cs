@@ -21,4 +21,8 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    void AnimationEnded()
+    {
+        gameObject.SetActive(false);
+    }
 }

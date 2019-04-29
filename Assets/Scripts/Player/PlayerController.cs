@@ -6,13 +6,19 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
     public GameObject player,
-        shadow;
+        shadow,
+        explosion;
+    
     public Vector3 first_PosOfPlayer,
         second_PosOfPlayer;
 
     private Animator anim;
     private string jump_Animation = "PlayerJump",
         change_Line_Animation = "ChangeLine";
+    private SpriteRenderer player_Renderer;
+    public Sprite trex_Sprite, player_Sprite;
+    private bool trex_Trigger;
+    private GameObject[] star_Effect;
 
     [HideInInspector]
     public bool player_Died;
@@ -25,6 +31,8 @@ public class PlayerController : MonoBehaviour
     {
         MakeInstance();
         anim = player.GetComponent<Animator>();
+        player_Renderer = player.GetComponent<SpriteRenderer>();
+        star_Effect = GameObject.FindGameObjectsWithTag(Tags.STAR_EFFECT);
     }
 
     // Start is called before the first frame update
@@ -77,6 +85,88 @@ public class PlayerController : MonoBehaviour
                 anim.Play("PlayerJump");
                 player_Jumped = true;
             }
+        }
+    }
+
+    void Die()
+    {
+        player_Died = true;
+        player.SetActive(false);
+        shadow.SetActive(false);
+        GameplayController.instance.moveSpeed = 0f;
+        //GameplayController.instance.GameOver();
+        //sound manager
+        //player dead
+        //game over
+    }
+
+    void DieWithObstacle(Collider2D target)
+    {
+        Die();
+        explosion.transform.position = target.transform.position;
+        explosion.SetActive(true);
+        target.gameObject.SetActive(false);
+        //sound manager play player dead
+    }
+
+    IEnumerator TRexDuration()
+    {
+        yield return new WaitForSeconds(7f);
+        if (trex_Trigger)
+        {
+            trex_Trigger = false;
+            player_Renderer.sprite = player_Sprite;
+        }
+    }
+
+    void DestroyObstacle(Collider2D target)
+    {
+        explosion.transform.position = target.transform.position;
+        explosion.SetActive(false);
+        explosion.SetActive(true);
+        target.gameObject.SetActive(false);
+        //sound manager
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print(collision.tag);
+        if(collision.tag == Tags.OBSTACLE)
+        {
+            if (!trex_Trigger)
+            {
+                DieWithObstacle(collision);
+            }
+            else
+            {
+                DestroyObstacle(collision);
+            }
+        }
+
+        if(collision.tag == Tags.T_REX)
+        {
+            trex_Trigger = true;
+            player_Renderer.sprite = trex_Sprite;
+            collision.gameObject.SetActive(false);
+            //sound manager to play music
+
+            StartCoroutine(TRexDuration());
+        }
+
+        if(collision.tag == Tags.STAR)
+        {
+            for(int i = 0; i < star_Effect.Length; i++)
+            {
+                if (!star_Effect[i].activeInHierarchy)
+                {
+                    star_Effect[i].transform.position = collision.transform.position;
+                    star_Effect[i].SetActive(true);
+                    break;
+                }
+            }
+            collision.gameObject.SetActive(false);
+            // sound manager
+            // gameplay controller to increase star score
         }
     }
 }
