@@ -66,13 +66,13 @@ public class PlayerController : MonoBehaviour
         {
             anim.Play(change_Line_Animation);
             transform.localPosition = second_PosOfPlayer;
-            //play the sound
+            SoundManager.instance.PlayMoveLineSound();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             anim.Play(change_Line_Animation);
             transform.localPosition = first_PosOfPlayer;
-            //play the sound
+            SoundManager.instance.PlayMoveLineSound();
         }
     }
 
@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
             {
                 anim.Play("PlayerJump");
                 player_Jumped = true;
+                SoundManager.instance.PlayJumpSound();
             }
         }
     }
@@ -96,7 +97,8 @@ public class PlayerController : MonoBehaviour
         GameplayController.instance.moveSpeed = 0f;
         //GameplayController.instance.GameOver();
         //sound manager
-        //player dead
+        SoundManager.instance.PlayDeadSound();
+        SoundManager.instance.PlayGameOverSound();
         //game over
     }
 
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
         explosion.transform.position = target.transform.position;
         explosion.SetActive(true);
         target.gameObject.SetActive(false);
-        //sound manager play player dead
+        SoundManager.instance.PlayGameOverSound();
     }
 
     IEnumerator TRexDuration()
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour
         explosion.SetActive(false);
         explosion.SetActive(true);
         target.gameObject.SetActive(false);
-        //sound manager
+        SoundManager.instance.PlayDeadSound();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -148,7 +150,7 @@ public class PlayerController : MonoBehaviour
             trex_Trigger = true;
             player_Renderer.sprite = trex_Sprite;
             collision.gameObject.SetActive(false);
-            //sound manager to play music
+            SoundManager.instance.PlayPowerUpSound();
 
             StartCoroutine(TRexDuration());
         }
@@ -165,7 +167,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             collision.gameObject.SetActive(false);
-            // sound manager
+            SoundManager.instance.PlayCoinSound();
             // gameplay controller to increase star score
         }
     }
