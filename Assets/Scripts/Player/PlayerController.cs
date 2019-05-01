@@ -132,7 +132,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision.tag);
         if(collision.tag == Tags.OBSTACLE)
         {
             if (!trex_Trigger)
