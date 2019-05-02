@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
         //sound manager
         SoundManager.instance.PlayDeadSound();
         SoundManager.instance.PlayGameOverSound();
+        GameplayController.instance.GameOver();
         //game over
     }
 
@@ -167,7 +168,7 @@ public class PlayerController : MonoBehaviour
             }
             collision.gameObject.SetActive(false);
             SoundManager.instance.PlayCoinSound();
-            // gameplay controller to increase star score
+            GameplayController.instance.UpdateStarScore();
         }
     }
 }

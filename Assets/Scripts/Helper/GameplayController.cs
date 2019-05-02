@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameplayController : MonoBehaviour
 {
@@ -9,6 +11,11 @@ public class GameplayController : MonoBehaviour
     public float moveSpeed, distance_Factor = 1f;
     public GameObject obstacles_Obj;
     public GameObject[] obstacles_List;
+    public GameObject pausePanel;
+    public Animator pauseAnim;
+    public GameObject gameOverPanel;
+    public Animator gameOverAnim;
+    public Text finalScore_Text, bestScore_Text, finalStarScore_Text;
 
     [HideInInspector]
     public bool obstacles_Is_Active;
@@ -16,10 +23,17 @@ public class GameplayController : MonoBehaviour
     private float distance_Move;
     private bool gameJustStarted;
     private string Coroutine_Name = "SpawnObstacles";
+    private Text score_Text;
+    private Text starScore_Text;
+    private int starScore_count, score_count;
+
 
     void Awake()
     {
         MakeInstance();
+        score_Text = GameObject.Find("ScoreText").GetComponent<Text>();
+        starScore_Text = GameObject.Find("StarText").GetComponent<Text>();
+
     }
 
     private void Start()
@@ -78,6 +92,8 @@ public class GameplayController : MonoBehaviour
         distance_Move += Time.deltaTime * distance_Factor;
         float round = Mathf.Round(distance_Move);
         //count and show the score
+        score_count = (int)round;
+        score_Text.text = score_count.ToString();
         if(round >= 30.0f && round < 60.0f)
         {
             moveSpeed = 14f;
@@ -120,5 +136,52 @@ public class GameplayController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.6f);
         }
+    }
+
+    public void UpdateStarScore()
+    {
+        starScore_count++;
+        starScore_Text.text = starScore_count.ToString();
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        pausePanel.SetActive(true);
+        pauseAnim.Play("SlideIn");
+    }
+
+    public void ResumeGame()
+    {
+        pauseAnim.Play("SlideOut");
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void HomeButton()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
+        gameOverAnim.Play("SlideIn");
+        finalScore_Text.text = score_count.ToString();
+        finalStarScore_Text.text = starScore_count.ToString();
+        if(GameManager.instance.scoreCount < score_count)
+        {
+            GameManager.instance.scoreCount = score_count;
+        }
+
+        bestScore_Text.text = "Best: " + GameManager.instance.scoreCount.ToString();
+        GameManager.instance.starScore += starScore_count;
+        GameManager.instance.SaveGameData();
     }
 }

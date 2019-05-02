@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool playSound = true;
 
-    // Start is called before the first frame update
     void Awake()
     {
         MakeSingleton();
