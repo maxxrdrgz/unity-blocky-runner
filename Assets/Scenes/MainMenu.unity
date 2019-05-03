@@ -1373,6 +1373,7 @@ MonoBehaviour:
   music_Img: {fileID: 1601775763}
   music_on: {fileID: 21300000, guid: a42fc888cbcf54b4eb53b60bc343a1ba, type: 3}
   music_off: {fileID: 21300000, guid: c33642f356fc1e448a6fc944c12ecf8d, type: 3}
+  selectedHeroImg: {fileID: 219552052}
 --- !u!114 &601908772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,7 +1398,7 @@ MonoBehaviour:
   - {fileID: 1130722581}
   selectedText: {fileID: 487049265}
   starIcon: {fileID: 1441727258}
-  selectbtn: {fileID: 1465933611}
+  selectbtn_Img: {fileID: 1465933611}
   button_green: {fileID: 21300000, guid: 1018f8c1d99abed4b95dcc6754f80a31, type: 3}
   button_blue: {fileID: 21300000, guid: dbdfd7d2ba8380a469a1612c99d55887, type: 3}
   starScoreText: {fileID: 1878724609}
@@ -2452,7 +2453,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1465933611}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 601908772}
+        m_MethodName: SelectHero
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 601908771}
+        m_MethodName: ChangeSelectedHeroImg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1465933611
@@ -2643,7 +2666,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1601775763}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 601908771}
+        m_MethodName: MusicButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1601775763

@@ -10,6 +10,12 @@ public class MainMenuController : MonoBehaviour
     public Text starScoreText;
     public Image music_Img;
     public Sprite music_on, music_off;
+    public Image selectedHeroImg;
+
+    private void Awake()
+    {
+        ChangeSelectedHeroImg();
+    }
 
     public void PlayGame()
     {
@@ -39,5 +45,11 @@ public class MainMenuController : MonoBehaviour
             GameManager.instance.playSound = true;
             music_Img.sprite = music_on;
         }
+    }
+
+    public void ChangeSelectedHeroImg()
+    {
+        string path = "Sprites/Player/hero" + GameManager.instance.selectedIndex + "_big";
+        selectedHeroImg.sprite = Resources.Load<Sprite>(path);
     }
 }
