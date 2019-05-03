@@ -38,7 +38,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        string path = "Sprites/Player/hero" + GameManager.instance.selectedIndex + "_big";
+        player_Sprite = Resources.Load<Sprite>(path);
+        player_Renderer.sprite = player_Sprite;
     }
 
     // Update is called once per frame
@@ -95,12 +97,10 @@ public class PlayerController : MonoBehaviour
         player.SetActive(false);
         shadow.SetActive(false);
         GameplayController.instance.moveSpeed = 0f;
-        //GameplayController.instance.GameOver();
         //sound manager
         SoundManager.instance.PlayDeadSound();
         SoundManager.instance.PlayGameOverSound();
         GameplayController.instance.GameOver();
-        //game over
     }
 
     void DieWithObstacle(Collider2D target)

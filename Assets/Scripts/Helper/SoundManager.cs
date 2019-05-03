@@ -22,7 +22,15 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-       //test if we should play bg sound
+        //test if we should play bg sound
+        if (GameManager.instance.playSound)
+        {
+            bg_audio_source.Play();
+        }
+        else
+        {
+            bg_audio_source.Stop();
+        }
     }
 
     void MakeInstance()
