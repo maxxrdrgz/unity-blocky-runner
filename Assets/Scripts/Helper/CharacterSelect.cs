@@ -22,6 +22,12 @@ public class CharacterSelect : MonoBehaviour
         InitializeCharacters();
     }
 
+    /** 
+        Initializes the characters found in the character select menu. Gets the
+        last selectedIndex from the GameManager and sets the character from that
+        index to active. Lastly, loads available heros from the GameManager 
+        instance object
+    */
     void InitializeCharacters()
     {
         currentIndex = GameManager.instance.selectedIndex;
@@ -33,6 +39,12 @@ public class CharacterSelect : MonoBehaviour
         heroes = GameManager.instance.heroes;
     }
 
+    /** 
+        This function will cycle to the next hero in the available_Heroes array
+        by increasing the currentIndex. Checks if current index is at the last
+        position in the array and resets the index to 0 if true. Lastly checks
+        if character has been unlocked.
+    */
     public void NextHero()
     {
         available_Heroes[currentIndex].SetActive(false);
@@ -48,6 +60,13 @@ public class CharacterSelect : MonoBehaviour
         CheckIfCharacterisUnlocked();
     }
 
+    /** 
+        Much like NextHero() except it cycles to the previous hero in the
+        available_Heroes array by decreasing the currentIndex. Checks if current
+        index is at the starting position in the array and sets itself to
+        available_Heroes.length-1 if true. Lastly checks if the character has
+        been unlocked.
+    */
     public void PreviousHero()
     {
         available_Heroes[currentIndex].SetActive(false);
@@ -63,6 +82,15 @@ public class CharacterSelect : MonoBehaviour
         CheckIfCharacterisUnlocked();
     }
 
+    /** 
+        The heroes array contains the unlocked heroes stored in
+        the GameManager. Given the currentIndex, this function will check if the
+        hero is unlocked. If the user is looking at the selected character, the
+        select button sprite will be green and the text will show 'Selected'. If
+        the hero[currentIndex] is unlocked but not selected, the select button 
+        will be blue and prompt the user to select. If the hero is not unlocked
+        the user will be prompted to purchase the hero.
+    */
     public void CheckIfCharacterisUnlocked()
     {
         // if hero is unlocked
@@ -88,6 +116,14 @@ public class CharacterSelect : MonoBehaviour
         }
     }
 
+    /** 
+        This function changes the hero selected. If the hero is locked, it will
+        check to see if the user has enough stars to unlock the hero. If so,
+        it will subtract the heroPrice from the users starScore, unlock the hero
+        in the hero array and save the current game data. If the hero is already
+        unlocked, change the current hero to be the selected hero and save the
+        game data.
+    */
     public void SelectHero()
     {
         // if hero is locked
