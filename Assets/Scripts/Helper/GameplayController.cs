@@ -36,6 +36,10 @@ public class GameplayController : MonoBehaviour
 
     }
 
+    /** 
+        Initializes the gameJustStarted bool, calls the GetObstacles() function
+        and starts the SpawnObstacles coroutine.
+    */
     private void Start()
     {
         gameJustStarted = true;
@@ -49,6 +53,9 @@ public class GameplayController : MonoBehaviour
         MoveCamera();
     }
 
+    /** 
+        Creates a singleton that only persists within the current Scene
+    */
     void MakeInstance()
     {
         if(instance == null)
@@ -60,6 +67,11 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /** 
+        Slowly ramps up the speed, until it reaches a max of 12f. While the
+        player is still alive, change the main cameras transform position.
+        Then call the UpdateDistance() function.
+    */
     void MoveCamera()
     {
         if (gameJustStarted)
@@ -82,11 +94,20 @@ public class GameplayController : MonoBehaviour
         // check if player is alive
         if (!PlayerController.instance.player_Died)
         {
-            Camera.main.transform.position += new Vector3(moveSpeed * Time.deltaTime, 0f, 0f);
+            Camera.main.transform.position += new Vector3(
+                moveSpeed * Time.deltaTime, 
+                0f, 
+                0f
+            );
             UpdateDistance();
         }
     }
 
+    /** 
+        distance_Move is a counter that increases as the player is still alive
+        and traveling. Increases the score count and the longer the player lives
+        increase the moveSpeed depending on how far the play has gotten.
+    */
     void UpdateDistance()
     {
         distance_Move += Time.deltaTime * distance_Factor;
@@ -104,6 +125,11 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /** 
+        Creates a new list based on the number of obstacle configurations found
+        under that obstacles_Obj. Stores each configuration inside of the
+        obstacles list.
+    */
     void GetObstacles()
     {
         obstacles_List = new GameObject[obstacles_Obj.transform.childCount];
@@ -114,6 +140,14 @@ public class GameplayController : MonoBehaviour
 
     }
 
+    /** 
+        Using the obstacle list, if the player is still alive, randomly select 
+        an index within the bounds of the list. With the generated index,
+        set the list of obstacles to be active. Sets a new list of objects to be
+        active 85% of the time.
+
+        @returns {IEnumerator} returns time delay of 0.6 seconds
+    */
     IEnumerator SpawnObstacles()
     {
         while (true)
@@ -125,10 +159,11 @@ public class GameplayController : MonoBehaviour
                     if(Random.value <= 0.85f)
                     {
                         int randomIndex = 0;
+                        //do this until we get a list of obstacles that are not active
                         do
                         {
                             randomIndex = Mathf.RoundToInt(Random.Range(0f, 20f));
-                        } while (obstacles_List[randomIndex].activeInHierarchy); //do this until we get a list of obstacles that are not active
+                        } while (obstacles_List[randomIndex].activeInHierarchy);
                         obstacles_List[randomIndex].SetActive(true);
                         obstacles_Is_Active = true;
                     }
@@ -144,6 +179,11 @@ public class GameplayController : MonoBehaviour
         starScore_Text.text = starScore_count.ToString();
     }
 
+    /** 
+        Pauses the game by setting time scale to 0 and activates the pause menu
+        in the gameobject hierarchy. Plays the slide in animation applied to the
+        pause menu.
+    */
     public void PauseGame()
     {
         Time.timeScale = 0f;
@@ -168,6 +208,12 @@ public class GameplayController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    /** 
+        Stop the games time, display the game over menu and play the slide in
+        animation. Updates the final score/final star score and stores the
+        score count and the star score in the GameManager. Save the game data,
+        when game over occurs.
+    */
     public void GameOver()
     {
         Time.timeScale = 0f;
