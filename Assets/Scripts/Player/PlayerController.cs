@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool player_Jumped;
 
-
     private void Awake()
     {
         MakeInstance();
@@ -50,6 +49,9 @@ public class PlayerController : MonoBehaviour
         HandleJump();
     }
 
+    /** 
+        Creates a singleton that only persists within the current Scene
+    */
     void MakeInstance()
     {
         if(instance == null)
@@ -62,6 +64,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /** 
+        Gets input from the user. Depending on the input moves the 
+        player up and down and plays the move line sound
+    */
     void HandleChangeLine()
     {
         if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -78,6 +84,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /** 
+        Gets input from the user, checks if they've already jumped. If not, 
+        play the jump animation, set player_Jumped to true and play the jump sound
+    */
     void HandleJump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
