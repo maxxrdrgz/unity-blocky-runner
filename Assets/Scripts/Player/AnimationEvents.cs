@@ -12,6 +12,9 @@ public class AnimationEvents : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    /** 
+        Plays the walk animation and sets the player_Jumped bool to false
+    */
     void PlayerWalkAnimation()
     {
         anim.Play(walk_Animation);
@@ -21,11 +24,17 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    /** 
+        Disables the gameobject when called
+    */
     void AnimationEnded()
     {
         gameObject.SetActive(false);
     }
 
+    /** 
+        Set the time scale to 1 and disable the gameobject this script is attached to
+    */
     void PausePanelClose()
     {
         Time.timeScale = 1f;
