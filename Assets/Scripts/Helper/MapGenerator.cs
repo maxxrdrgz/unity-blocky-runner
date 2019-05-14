@@ -99,6 +99,9 @@ public class MapGenerator : MonoBehaviour
         Initialize();
     }
 
+    /** 
+        Creates a singleton that only persists in the current Scene
+    */
     void MakeInstance()
     {
         if(instance == null)
@@ -110,6 +113,10 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    /** 
+        Intializes all of the environmental prefabs which include the road, 
+        grass, ground and trees.
+    */
     void Initialize()
     {
         InitializePlatform(roadPrefab, ref last_Pos_Of_Road_Tile, roadPrefab.transform.position,
