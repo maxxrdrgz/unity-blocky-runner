@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /** 
+        Creates singleton of the GameManager instance object
+    */
     void MakeSingleton()
     {
         if(instance != null)
@@ -48,6 +51,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /** 
+        Attempts to load the game data. If no game data is found, sets up
+        initial values for the scores, heros and indexes. Then saves the initial
+        game data.
+    */
     void InitializeGameData()
     {
         LoadGameData();
@@ -76,6 +84,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /** 
+        Creates the game save file using the FileStream. Sets the gameData 
+        object with the available data stored in the GameManager, and then
+        serializes the data to the save game file. Closes the file once
+        finished.
+    */
     public void SaveGameData()
     {
         FileStream file = null;
@@ -100,6 +114,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /** 
+        Creates a file stream and attempts to open the last game save file.
+        Using the BinaryFormatter, deserialize the gamedata and type cast it
+        back to the GameData object. Store the loaded data in the GameManager.
+        Close the file once finisehd.
+    */
     public void LoadGameData()
     {
         FileStream file = null;
