@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         //initialize game if no save file was found
         if (gameData == null)
         {
-            starScore = 0;
+            starScore = 2000;
             scoreCount = 0;
             selectedIndex = 0;
 
