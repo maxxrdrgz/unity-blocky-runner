@@ -8,20 +8,24 @@ public class ObstacleHolder : MonoBehaviour
     public float limitAxisX;
     public Vector3 firstPos, secondPos;
 
-
-
-    
-    
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    /** 
+        Moves the obstacles towards the player and disables them if the
+        localPosition.x is less then the limitAxisX which can be found in the
+        inspector.
+    */
     void Update()
     {
-        transform.position += new Vector3(-GameplayController.instance.moveSpeed * Time.deltaTime, 0f, 0f);
+        transform.position += new Vector3(
+            -GameplayController.instance.moveSpeed * Time.deltaTime, 
+            0f, 
+            0f
+        );
         if(transform.localPosition.x <= limitAxisX)
         {
             //inform gameplay controller that the obstacle is not active
@@ -30,6 +34,11 @@ public class ObstacleHolder : MonoBehaviour
         }
     }
 
+    /** 
+        When this gameobject is enabled, this function will enable all child
+        gameobjects with a 50% random chance that the children will be spawned
+        at either the top or bottom position of the road.
+    */
     private void OnEnable()
     {
         for(int i = 0; i< childs.Length; i++)

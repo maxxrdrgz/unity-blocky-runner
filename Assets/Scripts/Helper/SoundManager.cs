@@ -20,6 +20,10 @@ public class SoundManager : MonoBehaviour
         MakeInstance();    
     }
 
+    /** 
+        Checks the playsound bool in the GameManager to determine whether or
+        not to play the background music
+    */
     private void Start()
     {
         //test if we should play bg sound
@@ -33,6 +37,9 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    /** 
+        Creates singleton that only persists in current Scene
+    */
     void MakeInstance()
     {
         if(instance == null)
@@ -44,9 +51,7 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    //TODO optimize sound manager to use one audio source and just change the clips
-
+    
     public void PlayMoveLineSound()
     {
         move_audio_source.Play();

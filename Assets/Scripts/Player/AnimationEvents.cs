@@ -33,7 +33,8 @@ public class AnimationEvents : MonoBehaviour
     }
 
     /** 
-        Set the time scale to 1 and disable the gameobject this script is attached to
+        Set the time scale to 1 and disable the gameobject this script is 
+        attached to
     */
     void PausePanelClose()
     {
