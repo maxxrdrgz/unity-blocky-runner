@@ -9,7 +9,6 @@ public class OffScreen : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
-        print(gameObject);
     }
 
     /** 
