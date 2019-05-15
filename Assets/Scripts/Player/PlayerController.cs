@@ -34,7 +34,10 @@ public class PlayerController : MonoBehaviour
         star_Effect = GameObject.FindGameObjectsWithTag(Tags.STAR_EFFECT);
     }
 
-    // Start is called before the first frame update
+    /** 
+        Using the selectedIndex and clever naming of the sprites, when Start is
+        called, the selected hero sprite will be shown.
+    */
     void Start()
     {
         string path = "Sprites/Player/hero" + GameManager.instance.selectedIndex + "_big";
@@ -101,6 +104,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /** 
+        This function will stop the players movespeed, set the player and it's
+        shadow to be disabled, play the dead sound and gameover sound and finish
+        up by calling the GameOver() found in the GameplayController.
+    */
     void Die()
     {
         player_Died = true;
@@ -113,15 +121,28 @@ public class PlayerController : MonoBehaviour
         GameplayController.instance.GameOver();
     }
 
+    /** 
+        This function will call the Die() and set the explosions position to that
+        of the targets, enable the explosion gameObject, disable the target and
+        play the game over sound
+
+        @param {Collider2D} the other collider the player has collided with 
+    */
     void DieWithObstacle(Collider2D target)
     {
         Die();
         explosion.transform.position = target.transform.position;
         explosion.SetActive(true);
         target.gameObject.SetActive(false);
-        SoundManager.instance.PlayGameOverSound();
     }
 
+    /** 
+        This function will set the player's sprite back to it's original sprite 
+        after the delay has finished. This occurs when the player's sprite is 
+        currently showing the powerup.
+
+        @param {IEnumerator} returns delay of 7 seconds
+    */
     IEnumerator TRexDuration()
     {
         yield return new WaitForSeconds(7f);
@@ -132,6 +153,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /** 
+        Sets the explosions position to that of the targets. Then activates the
+        explosion, disables the target and plays the dead sound.
+
+        @param {Collider2D} the other collider the player has collided with 
+    */
     void DestroyObstacle(Collider2D target)
     {
         explosion.transform.position = target.transform.position;
@@ -141,6 +168,16 @@ public class PlayerController : MonoBehaviour
         SoundManager.instance.PlayDeadSound();
     }
 
+    /** 
+        This function detects collision with the player and other gameobjects.
+        If the player collides with an obstacle and does not have the T-Rex
+        power up, then die else destroy the obstacle. If the player collides 
+        with the T-Rex object, power up the player and change it's sprite. If
+        the player collides with stars, play the star particle effects, play the
+        coin sound and update the star score.
+
+         @param {Collider2D} The other Collider2D involved in this collision.
+    */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == Tags.OBSTACLE)
