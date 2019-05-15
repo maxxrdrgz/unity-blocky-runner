@@ -119,25 +119,73 @@ public class MapGenerator : MonoBehaviour
     */
     void Initialize()
     {
-        InitializePlatform(roadPrefab, ref last_Pos_Of_Road_Tile, roadPrefab.transform.position,
-            start_Road_Tile, road_Holder, ref road_Tiles, ref last_Order_Of_Road, new Vector3(1.5f, 0f, 0f));
+        InitializePlatform(
+            roadPrefab, 
+            ref last_Pos_Of_Road_Tile, 
+            roadPrefab.transform.position,
+            start_Road_Tile, 
+            road_Holder, 
+            ref road_Tiles, 
+            ref last_Order_Of_Road, 
+            new Vector3(1.5f, 0f, 0f)
+        );
 
-        InitializePlatform(grass_Prefab, ref last_Pos_Of_Top_Near_Grass, grass_Prefab.transform.position,
-            start_Grass_Tile, top_Near_Side_Walk_Holder, ref top_Near_Grass_Tiles, ref last_Order_Of_Top_Near_Grass,
-            new Vector3(1.2f, 0f, 0f));
+        InitializePlatform(
+            grass_Prefab, 
+            ref last_Pos_Of_Top_Near_Grass, 
+            grass_Prefab.transform.position,
+            start_Grass_Tile, 
+            top_Near_Side_Walk_Holder, 
+            ref top_Near_Grass_Tiles, 
+            ref last_Order_Of_Top_Near_Grass,
+            new Vector3(1.2f, 0f, 0f)
+        );
 
-        InitializePlatform(groundPrefab_3, ref last_Pos_Of_Top_Far_Grass, groundPrefab_3.transform.position,
-            start_Ground3_Tile, top_Far_Side_Walk_Holder, ref top_Far_Grass_Tiles, ref last_Order_Of_Top_Far_Grass,
-            new Vector3(4.8f, 0f, 0f));
+        InitializePlatform(
+            groundPrefab_3, 
+            ref last_Pos_Of_Top_Far_Grass, 
+            groundPrefab_3.transform.position,
+            start_Ground3_Tile, 
+            top_Far_Side_Walk_Holder, 
+            ref top_Far_Grass_Tiles, 
+            ref last_Order_Of_Top_Far_Grass,
+            new Vector3(4.8f, 0f, 0f)
+        );
 
-        InitializePlatform(grass_Bottom_Prefab, ref last_Pos_Of_Bottom_Near_Grass, new Vector3(2.0f, grass_Bottom_Prefab.transform.position.y, 0f),
-            start_Grass_Tile,bottom_Near_Side_walk_Holder, ref bottom_Near_Grass_Tiles, ref last_Order_Of_Bottom_Near_Grass,
-            new Vector3(1.2f, 0f, 0f));
+        InitializePlatform(
+            grass_Bottom_Prefab, 
+            ref last_Pos_Of_Bottom_Near_Grass, 
+            new Vector3(2.0f, grass_Bottom_Prefab.transform.position.y, 0f),
+            start_Grass_Tile,
+            bottom_Near_Side_walk_Holder, 
+            ref bottom_Near_Grass_Tiles, 
+            ref last_Order_Of_Bottom_Near_Grass,
+            new Vector3(1.2f, 0f, 0f)
+        );
         InitializeBottomFarLand();
     }
 
-    // a lot of this just creates and positions the tiles, using the Pos_For_X_X arrays that are set in the inspector, those numbers determine the order layer for a type of tile
+    /** 
+        A lot of this just creates and positions the tiles, using the Pos_For_X_X 
+        arrays that are set in the inspector, those numbers determine the order 
+        layer for a type of tile.
 
+        This function will intialize a row of gameobjects depending on the prefab
+        that is passed in. The number of gameobjects created is dependent upon
+        the amountTile integer which comes from the unity inspector. Depending 
+        on the tag of the clone, the clone will be positioned apropriately on
+        screen. Posistion is also given from the inspector.
+
+        @param {GameObject} prefab to be cloned
+        @param {ref Vector3} reference to the last position of the prefab
+        @param {Vector3} value of the last position of the prefab
+        @param {int} amount of tiles to clone 
+        @param {GameObject} parent gameobject that all clones will be a child of
+        @param {ref List<GameObject>} reference to list of clones
+        @param {ref int} reference to last order in layer of the prefab
+        @param {Vector3} the amount of offset the next clone will be spawned at
+
+    */
     void InitializePlatform(GameObject prefab, ref Vector3 last_Pos, Vector3 last_Pos_Of_Tile,
         int amountTile, GameObject holder, ref List<GameObject> list_Tile, ref int last_Order, Vector3 offset)
     {
@@ -146,23 +194,45 @@ public class MapGenerator : MonoBehaviour
 
         for(int i = 0; i < amountTile; i++)
         {
-            GameObject clone = Instantiate(prefab, last_Pos, prefab.transform.rotation) as GameObject;
+            GameObject clone = Instantiate(
+                                    prefab, 
+                                    last_Pos, 
+                                    prefab.transform.rotation
+                               ) as GameObject;
             clone.GetComponent<SpriteRenderer>().sortingOrder = orderInLayer;
 
             if(clone.tag == Tags.TOP_NEAR_GRASS)
             {
-                SetNearScene(big_Grass_Prefab, ref clone, ref orderInLayer, pos_For_Top_Big_Grass,
-                    pos_For_Top_Tree_1, pos_For_Top_Tree_2, pos_For_Top_Tree_3);
+                SetNearScene(
+                    big_Grass_Prefab, 
+                    ref clone, 
+                    ref orderInLayer, 
+                    pos_For_Top_Big_Grass,
+                    pos_For_Top_Tree_1, 
+                    pos_For_Top_Tree_2, 
+                    pos_For_Top_Tree_3
+                );
                 
             }else if(clone.tag == Tags.BOTTOM_NEAR_GRASS)
             {
-                SetNearScene(big_Grass_Bottom_Prefab, ref clone, ref orderInLayer, pos_For_Bottom_Big_Grass,
-                    pos_For_Top_Tree_1, pos_For_Top_Tree_2, pos_For_Top_Tree_3);
+                SetNearScene(
+                    big_Grass_Bottom_Prefab, 
+                    ref clone, 
+                    ref orderInLayer, 
+                    pos_For_Bottom_Big_Grass,
+                    pos_For_Top_Tree_1, 
+                    pos_For_Top_Tree_2, 
+                    pos_For_Top_Tree_3
+                );
             }else if(clone.tag == Tags.BOTTOM_FAR_LAND_2)
             {
                 if(orderInLayer == 5)
                 {
-                    CreateTreeOrGround(big_Tree_Prefab, ref clone, new Vector3(-0.57f, -1.34f, 0f));
+                    CreateTreeOrGround(
+                        big_Tree_Prefab, 
+                        ref clone, 
+                        new Vector3(-0.57f, -1.34f, 0f)
+                    );
                 }
             }else if(clone.tag == Tags.TOP_FAR_GRASS)
             {
@@ -176,6 +246,16 @@ public class MapGenerator : MonoBehaviour
         } //for loop
     } //InitializePlatform
 
+    /** 
+        This function is responsible for creating the scenery. It will instantiate
+        and position the grass prefabs at the position of the passed in
+        tileClone. The tileClone becomes the parent of the newly instantiated
+        clone.
+
+        @param {GameObject} the grass prefab to be cloned
+        @param {ref GameObject} reference to a clone of the prefab
+        @param {int} order in layer
+    */
     void CreateScene(GameObject bigGrassPrefab, ref GameObject tileClone, int orderInLayer)
     {
         //instantiates big grass prefab
@@ -191,9 +271,24 @@ public class MapGenerator : MonoBehaviour
 
     } // createscene()
 
+    /** 
+        Creates a tree or ground gameobject depending on the prefab that is
+        passed in at the position of the tileClone. The tileClone is set as the
+        parent of the newly created clone and has it's parent's renderer disabled. 
+
+        @param {GameObject} prefab to be cloned
+        @param {ref GameObject} clone of the prefab
+        @param {Vector3} local position in which newly create clone should be 
+                         placed relative to parent
+    */
     void CreateTreeOrGround(GameObject prefab, ref GameObject tileClone, Vector3 localPos)
     {
-        GameObject clone = Instantiate(prefab, tileClone.transform.position, prefab.transform.rotation) as GameObject;
+        GameObject clone = Instantiate(
+                                prefab, 
+                                tileClone.transform.position, 
+                                prefab.transform.rotation
+                            ) as GameObject;
+
         SpriteRenderer tileCloneRenderer = tileClone.GetComponent<SpriteRenderer>();
         SpriteRenderer cloneRenderer = clone.GetComponent<SpriteRenderer>();
         cloneRenderer.sortingOrder = tileCloneRenderer.sortingOrder;
@@ -206,6 +301,13 @@ public class MapGenerator : MonoBehaviour
 
     } //CreateTreeOrGround
 
+    /** 
+        This function will create the ground gameobjects using the orderInLayer
+        that can be seen around the road.
+
+        @param {ref GameObject} reference to the clone of the ground prefab
+        @param {ref int} reference to the order in layer int
+    */
     void CreateGround(ref GameObject clone, ref int orderInLayer)
     {
         for(int i = 0; i < pos_For_Top_Ground_1.Length; i++)
@@ -234,6 +336,20 @@ public class MapGenerator : MonoBehaviour
         }
     } //CreateGround
 
+    /** 
+        This function creates big grass gameobjects near the road. They're the
+        grass objects that have a slight elevation. This function will also
+        determine if a tree should be created on top of the ground. Note that
+        the arrays are set in the inspector.
+
+        @param {GameObject} big grass prefab
+        @param {ref GameObject} clone of the big grass prefab
+        @param {ref int} order in layer
+        @param {int[]} array that contains order in layers for the big grass
+        @param {int[]} array that contains order in layers for the tree1
+        @param {int[]} array that contains order in layers for the tree2
+        @param {int[]} array that contains order in layers for the tree3
+    */
     void SetNearScene(GameObject bigGrassPrefab, ref GameObject clone, ref int orderInLayer,
         int[] pos_For_BigGrass, int[] pos_For_Tree1, int[] pos_For_Tree2, int[] pos_For_Tree3)
     {
@@ -274,6 +390,10 @@ public class MapGenerator : MonoBehaviour
         }
     } // SetNearScene
 
+    /** 
+        This function will create all of the flat land found at the bottom of 
+        the camera.
+    */
     void InitializeBottomFarLand()
     {
         InitializePlatform(land_Prefab_1, ref last_Pos_Of_Bottom_Far_Land_F1, land_Prefab_1.transform.position,
